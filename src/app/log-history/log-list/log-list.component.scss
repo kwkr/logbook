@@ -16,3 +16,8 @@
 .log-list-item{
   padding-left: 24px;
 }
+
+.log-duration::before{
+  content: "🕑";
+  padding-right: 2px;
+}

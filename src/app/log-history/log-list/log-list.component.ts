@@ -12,5 +12,9 @@ export class LogListComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.log.logs.forEach(log => {
+      this.totalDuration += log.duration;
+    });
+  }
 }
