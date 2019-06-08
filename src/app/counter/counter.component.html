@@ -1,6 +1,12 @@
 <mat-card class="counter-wrapper">
   <h2>{{ timeLeft | time }}</h2>
   <span>to the next log</span>
-  <p>Start another productive day!</p>
-  <button mat-raised-button (click)="startCounting()">!</button>
+  <div *ngIf="!isCounting">
+    <p>Start another productive day!</p>
+    <button mat-raised-button (click)="startCounting()">!</button>
+  </div>
+  <div *ngIf="isCounting">
+    <p>Don't stop!</p>
+    <button mat-raised-button>Pause</button>
+  </div>
 </mat-card>

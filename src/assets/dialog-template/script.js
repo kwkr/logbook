@@ -19,8 +19,6 @@ document.addEventListener('dataReady', loadInitialValues, false);
 document.addEventListener(
   'keypress',
   function(e) {
-    console.log('test');
-
     if (e.keyCode === 13) {
       submitForm();
     }

@@ -12,7 +12,7 @@ export interface Log {
 })
 export class LogDataService {
   private todayLogsSubject: BehaviorSubject<any>;
-  private currentDuration = 30;
+  private currentDuration = 10;
 
   constructor() {
     this.todayLogsSubject = new BehaviorSubject(
@@ -48,7 +48,7 @@ export class LogDataService {
     let todayItem: any = localStorage.getItem(todayKey);
     if (!todayItem) {
       todayItem = {};
-      todayItem[''] = [];
+      todayItem[todayKey] = [];
     } else {
       todayItem = JSON.parse(todayItem);
     }
@@ -56,7 +56,8 @@ export class LogDataService {
   }
 
   private notifyOnNewLog() {
-    this.todayLogsSubject.next(this.getCurrentItemsFromStorage());
+    const data = this.getCurrentItemsFromStorage();
+    this.todayLogsSubject.next(data);
   }
 
   public getTodaysLogs() {

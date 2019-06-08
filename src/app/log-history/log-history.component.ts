@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { LogDataService, Log } from '../core/log-data.service';
 
 export interface DayLogs {
@@ -14,16 +14,21 @@ export interface DayLogs {
 export class LogHistoryComponent implements OnInit {
   logsToDisplay: DayLogs[] = [];
 
-  constructor(private logService: LogDataService) {}
+  constructor(
+    private logService: LogDataService,
+    private cr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.logService.getTodaysLogs().subscribe(logs => {
-      this.logsToDisplay = [];
+      const newLogs = [];
       Object.entries(logs).forEach(entry => {
         const logsFromSource: any = entry[1];
         const newLog: DayLogs = { title: entry[0], logs: logsFromSource };
-        this.logsToDisplay.push(newLog);
+        newLogs.push(newLog);
       });
+      this.logsToDisplay = newLogs;
+      this.cr.detectChanges();
     });
   }
 }
