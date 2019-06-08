@@ -7,9 +7,11 @@ import { AppMaterialModuleModule } from './app-material-module/app-material-modu
 import { CounterComponent } from './counter/counter.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { LogHistoryComponent } from './log-history/log-history.component';
+import { LogListComponent } from './log-history/log-list/log-list.component';
 
 @NgModule({
-  declarations: [AppComponent, CounterComponent],
+  declarations: [AppComponent, CounterComponent, LogHistoryComponent, LogListComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

@@ -19,7 +19,7 @@ export class LogDataService {
     localStorage.setItem(todayKey, JSON.stringify(todayItem));
   }
 
-  public getTodaysLogs(): string[] {
+  public getTodaysLogs() {
     const todayKey = this.getTodaysTimestamp();
     let todayItem: any = localStorage.getItem(todayKey);
     if (!todayItem) {
@@ -28,7 +28,7 @@ export class LogDataService {
     } else {
       todayItem = JSON.parse(todayItem);
     }
-    return [];
+    return todayItem;
   }
 
   private getTodaysTimestamp(): string {
