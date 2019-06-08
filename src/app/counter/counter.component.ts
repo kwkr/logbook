@@ -30,14 +30,4 @@ export class CounterComponent {
       }
     );
   }
-
-  public getMinutes(): string {
-    const stringToReturn: string = String(Math.floor(this.timeLeft / 60));
-    return stringToReturn.length === 1 ? '0' + stringToReturn : stringToReturn;
-  }
-
-  public getSeconds(): string {
-    const stringToReturn: string = String(this.timeLeft % 60);
-    return stringToReturn.length === 1 ? '0' + stringToReturn : stringToReturn;
-  }
 }

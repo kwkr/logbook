@@ -1,0 +1,18 @@
+.log-list-wrapper{
+  margin: 4px 6px;
+}
+
+.log-list-task{
+  font-size: 1.2em;
+  font-weight: 500;
+  padding-left: 6px;
+}
+
+.log-list-task::before{
+  content: "🔥";
+  padding-right: 2px;
+}
+
+.log-list-item{
+  padding-left: 24px;
+}

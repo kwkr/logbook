@@ -1,5 +1,5 @@
 <mat-card class="counter-wrapper">
-  <h2>{{ getMinutes() }}:{{ getSeconds() }}</h2>
+  <h2>{{ timeLeft | time }}</h2>
   <span>to the next log</span>
   <p>Start another productive day!</p>
   <button mat-raised-button (click)="startCounting()">!</button>

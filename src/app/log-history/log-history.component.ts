@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { LogDataService } from '../core/log-data.service';
+import { LogDataService, Log } from '../core/log-data.service';
 
 export interface DayLogs {
   title: string;
-  logs: string[];
+  logs: Log[];
 }
 
 @Component({
@@ -18,8 +18,8 @@ export class LogHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.logService.getTodaysLogs().subscribe(logs => {
+      this.logsToDisplay = [];
       Object.entries(logs).forEach(entry => {
-        this.logsToDisplay = [];
         const logsFromSource: any = entry[1];
         const newLog: DayLogs = { title: entry[0], logs: logsFromSource };
         this.logsToDisplay.push(newLog);

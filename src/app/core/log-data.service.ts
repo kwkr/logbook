@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+
+export interface Log {
+  ts: number;
+  description: string;
+  duration: number;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class LogDataService {
   private todayLogsSubject: BehaviorSubject<any>;
+  private currentDuration = 30;
 
   constructor() {
     this.todayLogsSubject = new BehaviorSubject(
@@ -21,9 +28,18 @@ export class LogDataService {
       todayItem[task] = [];
     } else {
       todayItem = JSON.parse(todayItem);
+      if (!todayItem[task]) {
+        todayItem[task] = [];
+      }
     }
-    todayItem[task].push(description);
+    const newLog: Log = {
+      description: description,
+      ts: new Date().getTime(),
+      duration: this.currentDuration
+    };
+    todayItem[task].push(newLog);
     localStorage.setItem(todayKey, JSON.stringify(todayItem));
+    this.updateLastTaskNameIfChanged(task);
     this.notifyOnNewLog();
   }
 
@@ -54,16 +70,23 @@ export class LogDataService {
   }
 
   public getLastProjectName(): string {
-    const lastProjectName: any = localStorage.getItem('lastProjectName');
+    const lastProjectName: any = localStorage.getItem('lastTaskName');
     if (!lastProjectName) {
-      localStorage.setItem('lastProjectName', '');
+      localStorage.setItem('lastTaskName', '');
       return '';
     }
     return lastProjectName;
   }
 
+  public updateLastTaskNameIfChanged(projectName: string): void {
+    const currentName = localStorage.getItem('lastTaskName');
+    if (currentName !== projectName) {
+      localStorage.setItem('lastTaskName', projectName);
+    }
+  }
+
   public setLastProjectName(projectName: string): void {
-    localStorage.setItem('lastProjectName', projectName);
+    localStorage.setItem('lastTaskName', projectName);
   }
 
   public getLastTasktName(): string {
@@ -73,5 +96,9 @@ export class LogDataService {
       return '';
     }
     return lastProjectName;
+  }
+
+  public getCurrentDuration() {
+    return this.currentDuration;
   }
 }

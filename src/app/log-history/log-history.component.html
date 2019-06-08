@@ -1,4 +1,6 @@
 <mat-card>
-  <p>Todays logs</p>
-  <app-log-list *ngFor="let log of logsToDisplay" [log]="log"></app-log-list>
+  <p class="log-history-title">Todays logs</p>
+  <div class="logs-histories-container">
+    <app-log-list *ngFor="let log of logsToDisplay" [log]="log"></app-log-list>
+  </div>
 </mat-card>

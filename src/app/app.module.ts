@@ -9,9 +9,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { LogHistoryComponent } from './log-history/log-history.component';
 import { LogListComponent } from './log-history/log-list/log-list.component';
+import { TimePipe } from './core/time.pipe';
 
 @NgModule({
-  declarations: [AppComponent, CounterComponent, LogHistoryComponent, LogListComponent],
+  declarations: [AppComponent, CounterComponent, LogHistoryComponent, LogListComponent, TimePipe],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

@@ -8,6 +8,7 @@ import { DayLogs } from '../log-history.component';
 })
 export class LogListComponent implements OnInit {
   @Input() log: DayLogs;
+  totalDuration = 0;
 
   constructor() {}
 

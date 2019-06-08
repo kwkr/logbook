@@ -1,2 +1,7 @@
-<p>{{ log.title }}</p>
-<p *ngFor="let row of log.logs">{{ row }}</p>
+<div class="log-list-wrapper">
+  <p class="log-list-task">{{ log.title }}</p>
+  <p *ngFor="let row of log.logs" class="log-list-item">
+    {{ row.description }} duration: {{ row.duration | time }}
+  </p>
+  <p>Total duration: {{ totalDuration | time }}</p>
+</div>

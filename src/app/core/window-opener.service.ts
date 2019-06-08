@@ -18,7 +18,7 @@ export class WindowOpenerService {
       })
       .subscribe(data => {
         const myWindow = window.open('', '', 'width=400,height=200');
-        myWindow['lastProjectName'] = this.logDataService.getLastProjectName();
+        myWindow['lastTaskName'] = this.logDataService.getLastProjectName();
         myWindow.document.write(data);
         myWindow['transferData'] = (task, description) => {
           setTimeout(() => {

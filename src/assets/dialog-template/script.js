@@ -6,7 +6,7 @@ function submitForm() {
 }
 
 function loadInitialValues() {
-  document.getElementById('task').value = window['lastProjectName'];
+  document.getElementById('task').value = window['lastTaskName'];
   document.getElementById('description').focus();
 }
 
