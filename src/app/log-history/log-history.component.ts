@@ -17,10 +17,13 @@ export class LogHistoryComponent implements OnInit {
   constructor(private logService: LogDataService) {}
 
   ngOnInit() {
-    Object.entries(this.logService.getTodaysLogs()).forEach(entry => {
-      const logs: any = entry[1];
-      const newLog: DayLogs = { title: entry[0], logs: logs };
-      this.logsToDisplay.push(newLog);
+    this.logService.getTodaysLogs().subscribe(logs => {
+      Object.entries(logs).forEach(entry => {
+        this.logsToDisplay = [];
+        const logsFromSource: any = entry[1];
+        const newLog: DayLogs = { title: entry[0], logs: logsFromSource };
+        this.logsToDisplay.push(newLog);
+      });
     });
   }
 }

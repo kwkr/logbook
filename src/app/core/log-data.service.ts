@@ -1,10 +1,17 @@
 import { Injectable } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LogDataService {
-  constructor() {}
+  private todayLogsSubject: BehaviorSubject<any>;
+
+  constructor() {
+    this.todayLogsSubject = new BehaviorSubject(
+      this.getCurrentItemsFromStorage()
+    );
+  }
 
   public putItemToStorage(task, description) {
     const todayKey = this.getTodaysTimestamp();
@@ -17,9 +24,10 @@ export class LogDataService {
     }
     todayItem[task].push(description);
     localStorage.setItem(todayKey, JSON.stringify(todayItem));
+    this.notifyOnNewLog();
   }
 
-  public getTodaysLogs() {
+  private getCurrentItemsFromStorage() {
     const todayKey = this.getTodaysTimestamp();
     let todayItem: any = localStorage.getItem(todayKey);
     if (!todayItem) {
@@ -29,6 +37,14 @@ export class LogDataService {
       todayItem = JSON.parse(todayItem);
     }
     return todayItem;
+  }
+
+  private notifyOnNewLog() {
+    this.todayLogsSubject.next(this.getCurrentItemsFromStorage());
+  }
+
+  public getTodaysLogs() {
+    return this.todayLogsSubject.asObservable();
   }
 
   private getTodaysTimestamp(): string {
