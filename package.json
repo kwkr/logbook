@@ -9,6 +9,17 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LeftHandFreeStudio/logbook"
+  },
+  "keywords": [
+    "logbook",
+    "track time",
+    "log",
+    "book"
+  ],
+  "author": "Maciej Kawka kawka.maciej.93@gmail.com",
   "private": true,
   "dependencies": {
     "@angular/animations": "^6.1.0",
