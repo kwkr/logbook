@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModuleModule } from './app-material-module/app-material-module.module';
 import { CounterComponent } from './counter/counter.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, CounterComponent],
@@ -13,7 +14,8 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     BrowserAnimationsModule,
     AppMaterialModuleModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

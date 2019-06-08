@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { timer, Observable } from 'rxjs';
 import { take, map } from 'rxjs/operators';
+import { WindowOpenerService } from '../core/window-opener.service';
 
 @Component({
   selector: 'app-counter',
@@ -8,10 +9,10 @@ import { take, map } from 'rxjs/operators';
   styleUrls: ['./counter.component.scss']
 })
 export class CounterComponent {
-  @Input() timeLeft = 5;
+  @Input() timeLeft = 1;
   counter$: Observable<number>;
 
-  constructor() {}
+  constructor(private windowOpener: WindowOpenerService) {}
 
   public startCounting(): void {
     this.counter$ = timer(0, 1000).pipe(
@@ -19,14 +20,13 @@ export class CounterComponent {
       map(() => --this.timeLeft)
     );
     this.counter$.subscribe(
-      () => {
-        console.log('value');
-      },
+      () => {},
       () => {
         console.log('error while counting');
       },
       () => {
         console.log('completed');
+        this.windowOpener.openNewWindowWithReminder();
       }
     );
   }

@@ -1,0 +1,8 @@
+.flex-col{
+  display: flex;
+  flex-direction: column;
+}
+
+.input-wrapper{
+  margin: 4px 0;
+}
