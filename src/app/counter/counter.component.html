@@ -1,3 +1,3 @@
-<p>
-  counter works!
-</p>
+<p>Time left: {{ getMinutes() }}:{{ getSeconds() }}</p>
+<p>Start another productive day!</p>
+<button mat-raised-button (click)="startCounting()">!</button>
