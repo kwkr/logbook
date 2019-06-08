@@ -13,6 +13,7 @@ export interface DayLogs {
 })
 export class LogHistoryComponent implements OnInit {
   logsToDisplay: DayLogs[] = [];
+  isSomethingToShow = false;
 
   constructor(
     private logService: LogDataService,
@@ -21,9 +22,14 @@ export class LogHistoryComponent implements OnInit {
 
   ngOnInit() {
     this.logService.getTodaysLogs().subscribe(logs => {
+      this.isSomethingToShow = false;
       const newLogs = [];
       Object.entries(logs).forEach(entry => {
         const logsFromSource: any = entry[1];
+        if (logsFromSource.length === 0) {
+          return;
+        }
+        this.isSomethingToShow = true;
         const newLog: DayLogs = { title: entry[0], logs: logsFromSource };
         newLogs.push(newLog);
       });

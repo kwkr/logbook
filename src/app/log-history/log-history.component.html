@@ -2,5 +2,8 @@
   <p class="log-history-title">Todays logs</p>
   <div class="logs-histories-container">
     <app-log-list *ngFor="let log of logsToDisplay" [log]="log"></app-log-list>
+    <p *ngIf="!isSomethingToShow">
+      There is nothing to show by now. Let's do something!
+    </p>
   </div>
 </mat-card>
