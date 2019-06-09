@@ -1,5 +1,10 @@
+@font-face {
+  font-family: 'Roboto';
+  src: URL('Roboto-Regular.ttf') format('truetype');
+}
+
 *{
-  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-family:'Roboto', 'Helvetica', 'Arial', sans-serif;
 }
 
 .flex-col{
