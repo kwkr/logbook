@@ -7,6 +7,8 @@ export interface Log {
   duration: number;
 }
 
+const lastTaskNameKey = 'lastTaskName';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -71,29 +73,29 @@ export class LogDataService {
   }
 
   public getLastProjectName(): string {
-    const lastProjectName: any = localStorage.getItem('lastTaskName');
+    const lastProjectName: any = localStorage.getItem(lastTaskNameKey);
     if (!lastProjectName) {
-      localStorage.setItem('lastTaskName', '');
+      localStorage.setItem(lastTaskNameKey, '');
       return '';
     }
     return lastProjectName;
   }
 
   public updateLastTaskNameIfChanged(projectName: string): void {
-    const currentName = localStorage.getItem('lastTaskName');
+    const currentName = localStorage.getItem(lastTaskNameKey);
     if (currentName !== projectName) {
-      localStorage.setItem('lastTaskName', projectName);
+      localStorage.setItem(lastTaskNameKey, projectName);
     }
   }
 
   public setLastProjectName(projectName: string): void {
-    localStorage.setItem('lastTaskName', projectName);
+    localStorage.setItem(lastTaskNameKey, projectName);
   }
 
   public getLastTasktName(): string {
-    const lastProjectName: any = localStorage.getItem('lastTaskName');
+    const lastProjectName: any = localStorage.getItem(lastTaskNameKey);
     if (!lastProjectName) {
-      localStorage.setItem('lastTaskName', '');
+      localStorage.setItem(lastTaskNameKey, '');
       return '';
     }
     return lastProjectName;

@@ -10,9 +10,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { LogHistoryComponent } from './log-history/log-history.component';
 import { LogListComponent } from './log-history/log-list/log-list.component';
 import { TimePipe } from './core/time.pipe';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
-  declarations: [AppComponent, CounterComponent, LogHistoryComponent, LogListComponent, TimePipe],
+  declarations: [AppComponent, CounterComponent, LogHistoryComponent, LogListComponent, TimePipe, SettingsComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
