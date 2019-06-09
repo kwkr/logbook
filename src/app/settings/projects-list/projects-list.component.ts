@@ -7,7 +7,12 @@ import { SettingsService } from 'src/app/core/settings.service';
   styleUrls: ['./projects-list.component.scss']
 })
 export class ProjectsListComponent implements OnInit {
+  projectOptions: string[] = [];
   constructor(private settingsService: SettingsService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.settingsService.getProjectOptions().subscribe(options => {
+      this.projectOptions = options;
+    });
+  }
 }

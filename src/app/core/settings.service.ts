@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { StorageService } from './storage.service';
 
 const projectOptionsKey = 'projectOptions';
+const currentDuationKey = 'currentDuration';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class SettingsService {
   constructor(private storage: StorageService) {
     this.savedProjectsOptions = this.getProjectOptionsFromStorage();
     this.savedProjectsSubject = new BehaviorSubject(this.savedProjectsOptions);
+    this.currentDuration = this.getCurrentDurationFromStore();
   }
 
   public getProjectOptions() {
@@ -50,10 +52,22 @@ export class SettingsService {
     let projectOptions: any = this.storage.getObjectFromStorage(
       projectOptionsKey
     );
-    if (projectOptions === '') {
+    if (projectOptions === '' || projectOptions === null) {
+      this.storage.saveObjectToStorage([], projectOptionsKey);
       projectOptions = [];
     }
     return projectOptions;
+  }
+
+  private getCurrentDurationFromStore() {
+    const currentDuration: any = this.storage.getObjectFromStorage(
+      currentDuationKey
+    );
+    if (currentDuration === '' || currentDuration === null) {
+      this.storage.saveObjectToStorage(1800, currentDuationKey);
+      return 1800;
+    }
+    return parseInt(currentDuration, 10);
   }
 
   public getCurrentDuration() {
