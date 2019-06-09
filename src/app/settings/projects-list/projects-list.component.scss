@@ -1,3 +1,29 @@
+.input-wrapper{
+  display: flex;
+}
+
+.add-project-input-wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.small-margin{
+  margin: 4px 8px;
+}
+
+.delete-button-wrapper{
+  flex: 2;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.delete-button-wrapper > button{
+  align-self:center;
+}
+
+
+//styling checkbox
 ::ng-deep mat-pseudo-checkbox.mat-pseudo-checkbox-checked::after{
   transform: none;
   content: "❌";

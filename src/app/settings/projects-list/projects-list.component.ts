@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { SettingsService } from 'src/app/core/settings.service';
 import { FormControl } from '@angular/forms';
 import { MatSelectionList } from '@angular/material/list';
@@ -18,6 +18,14 @@ export class ProjectsListComponent implements OnInit {
     this.settingsService.getProjectOptions().subscribe(options => {
       this.projectOptions = options;
     });
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  public enterEvent(event: KeyboardEvent) {
+    console.log(event);
+    if (event.keyCode === 13) {
+      this.addTask();
+    }
   }
 
   public deleteTasks() {

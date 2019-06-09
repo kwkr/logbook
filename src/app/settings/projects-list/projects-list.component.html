@@ -4,14 +4,25 @@
       {{ project }}
     </mat-list-option>
   </mat-selection-list>
-  <mat-form-field>
-    <input
-      matInput
-      [formControl]="newProjectFormControl"
-      required
-      placeholder="Add task"
-    />
-  </mat-form-field>
-  <button mat-raised-button (click)="addTask()">✔️</button>
-  <button mat-raised-button (click)="deleteTasks()">Delete selected</button>
+  <div class="input-wrapper">
+    <div class="add-project-input-wrapper">
+      <div class="small-margin">
+        <mat-form-field>
+          <input
+            matInput
+            [formControl]="newProjectFormControl"
+            required
+            placeholder="Add task"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="small-margin">
+        <button mat-raised-button (click)="addTask()">✔️</button>
+      </div>
+    </div>
+    <div class="small-margin delete-button-wrapper">
+      <button mat-raised-button (click)="deleteTasks()">Delete selected</button>
+    </div>
+  </div>
 </div>
