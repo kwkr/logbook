@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SettingsService } from 'src/app/core/settings.service';
+import { FormControl } from '@angular/forms';
+import { MatSelectionList } from '@angular/material/list';
 
 @Component({
   selector: 'app-projects-list',
@@ -8,11 +10,30 @@ import { SettingsService } from 'src/app/core/settings.service';
 })
 export class ProjectsListComponent implements OnInit {
   projectOptions: string[] = [];
+  @ViewChild('projectsList') projectsList: MatSelectionList;
+  newProjectFormControl: FormControl = new FormControl();
   constructor(private settingsService: SettingsService) {}
 
   ngOnInit() {
     this.settingsService.getProjectOptions().subscribe(options => {
       this.projectOptions = options;
     });
+  }
+
+  public deleteTasks() {
+    const projectsToRemove = [];
+    this.projectsList.selectedOptions.selected.forEach(option => {
+      projectsToRemove.push(option.getLabel().trim());
+    });
+    this.settingsService.removeFewProjectOptions(projectsToRemove);
+  }
+
+  public addTask(): void {
+    const newProject = this.newProjectFormControl.value;
+    if (newProject === '') {
+      return;
+    }
+    this.newProjectFormControl.reset();
+    this.settingsService.addProjectOption(newProject);
   }
 }

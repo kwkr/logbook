@@ -32,6 +32,21 @@ export class SettingsService {
       this.savedProjectsOptions,
       projectOptionsKey
     );
+    this.savedProjectsSubject.next(this.savedProjectsOptions);
+  }
+
+  public removeFewProjectOptions(optionsTomRemove: string[]) {
+    for (let k = this.savedProjectsOptions.length; k-- > 0; ) {
+      const currentOption = this.savedProjectsOptions[k];
+      if (optionsTomRemove.includes(currentOption)) {
+        this.savedProjectsOptions.splice(k, 1);
+      }
+    }
+    this.storage.saveObjectToStorage(
+      this.savedProjectsOptions,
+      projectOptionsKey
+    );
+    this.savedProjectsSubject.next(this.savedProjectsOptions);
   }
 
   public removeProjectOption(optionTomRemove: string) {
@@ -46,6 +61,7 @@ export class SettingsService {
       this.savedProjectsOptions,
       projectOptionsKey
     );
+    this.savedProjectsSubject.next(this.savedProjectsOptions);
   }
 
   private getProjectOptionsFromStorage() {

@@ -1,0 +1,14 @@
+::ng-deep mat-pseudo-checkbox.mat-pseudo-checkbox-checked::after{
+  transform: none;
+  content: "❌";
+  border: 0;
+  top:1px;
+  left: 2px;
+}
+
+::ng-deep mat-pseudo-checkbox.mat-pseudo-checkbox{
+  background: #dbdbdb;
+  border: none;
+  height: 25px;
+  width: 25px;
+}

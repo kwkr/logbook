@@ -1,3 +1,17 @@
-<p>
-  projects-list works!
-</p>
+<div>
+  <mat-selection-list #projectsList>
+    <mat-list-option *ngFor="let project of projectOptions">
+      {{ project }}
+    </mat-list-option>
+  </mat-selection-list>
+  <mat-form-field>
+    <input
+      matInput
+      [formControl]="newProjectFormControl"
+      required
+      placeholder="Add task"
+    />
+  </mat-form-field>
+  <button mat-raised-button (click)="addTask()">✔️</button>
+  <button mat-raised-button (click)="deleteTasks()">Delete selected</button>
+</div>
