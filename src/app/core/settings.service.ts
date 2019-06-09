@@ -86,6 +86,14 @@ export class SettingsService {
     return parseInt(currentDuration, 10);
   }
 
+  public saveNewDuration(newDuration: number) {
+    if (newDuration < 1) {
+      return;
+    }
+    this.storage.saveObjectToStorage(newDuration, currentDuationKey);
+    this.currentDuration = this.getCurrentDurationFromStore();
+  }
+
   public getCurrentDuration() {
     return this.currentDuration;
   }

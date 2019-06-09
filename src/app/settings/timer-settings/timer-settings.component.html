@@ -1,0 +1,18 @@
+<div class="timer-settings-wrapper">
+  <mat-form-field>
+    <input
+      matInput
+      [formControl]="timerValueFormControl"
+      placeholder="Timer value (in minutes)"
+    />
+  </mat-form-field>
+  <button mat-raised-button (click)="saveNewTimer()">✔️</button>
+  <p
+    [ngClass]="{
+      success: isSuccessfulyChanged,
+      'invisible-text': !isSuccessfulyChanged
+    }"
+  >
+    {{ successMsg }}
+  </p>
+</div>

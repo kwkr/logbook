@@ -12,9 +12,10 @@ import { LogListComponent } from './log-history/log-list/log-list.component';
 import { TimePipe } from './core/time.pipe';
 import { SettingsComponent } from './settings/settings.component';
 import { ProjectsListComponent } from './settings/projects-list/projects-list.component';
+import { TimerSettingsComponent } from './settings/timer-settings/timer-settings.component';
 
 @NgModule({
-  declarations: [AppComponent, CounterComponent, LogHistoryComponent, LogListComponent, TimePipe, SettingsComponent, ProjectsListComponent],
+  declarations: [AppComponent, CounterComponent, LogHistoryComponent, LogListComponent, TimePipe, SettingsComponent, ProjectsListComponent, TimerSettingsComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

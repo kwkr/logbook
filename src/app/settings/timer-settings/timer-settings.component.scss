@@ -1,0 +1,18 @@
+.timer-settings-wrapper{
+  min-width: 30vw;
+  margin: 24px 24px 0 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.success{
+  margin: 12px auto;
+  color: green;
+  font-size: 0.8em;
+}
+
+.invisible-text{
+  margin: 12px auto;
+  color: white;
+  font-size: 0.8em;
+}
