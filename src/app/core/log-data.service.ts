@@ -12,7 +12,7 @@ export interface Log {
 })
 export class LogDataService {
   private todayLogsSubject: BehaviorSubject<any>;
-  private currentDuration = 600;
+  private currentDuration = 1800;
 
   constructor() {
     this.todayLogsSubject = new BehaviorSubject(
