@@ -8,14 +8,17 @@
   </head>
   <body>
     <div class="form-wrapper flex-col">
-        <p>Log your activity!</p>
-      <div class="flex-col input-wrapper">
+        <h2>Log your activity!</h2>
+        <p id="timestamp"></p>
+      <div class="flex-col input-wrapper" >
           <label>Task</label>
-          <input id="task" autocomplete="off" />
+          <div class="autocomplete" >
+          <input id="task" type="text" name="task" autocomplete="off" />
+        </div>
       </div>
       <div class="flex-col input-wrapper">
           <label>Description</label>
-          <input id="description" autocomplete="off" />
+          <input id="description" type="text"  autocomplete="off" />
         </div>
         <button id="save-button">Submit</button>
     </div>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LogDataService } from './log-data.service';
 import { Subject } from 'rxjs';
+import { SettingsService } from './settings.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class WindowOpenerService {
 
   constructor(
     private http: HttpClient,
-    private logDataService: LogDataService
+    private logDataService: LogDataService,
+    private settings: SettingsService
   ) {}
 
   public openNewWindowWithReminder(duration: number): void {
@@ -20,27 +22,30 @@ export class WindowOpenerService {
         responseType: 'text' as 'json'
       })
       .subscribe(data => {
-        const myWindow = window.open('', '', 'width=400,height=200');
+        const myWindow = window.open('', '', 'width=400,height=300');
         myWindow['lastTaskName'] = this.logDataService.getLastTaskName();
-        myWindow.document.write(data);
-        myWindow.focus();
-        myWindow['transferData'] = (task, description) => {
-          setTimeout(() => {
-            if (duration === 0) {
-              this.logDataService.putLogToStorageWithDefaultDuration(
-                task,
-                description
-              );
-            } else {
-              this.logDataService.putLogToStorageWithCustomDuration(
-                task,
-                description,
-                duration
-              );
-            }
-            this.filledLogSubject.next();
-          }, 10);
-        };
+        this.settings.getProjectOptions().subscribe(options => {
+          myWindow['autocompleteOptions'] = options;
+          myWindow.document.write(data);
+          myWindow.focus();
+          myWindow['transferData'] = (task, description) => {
+            setTimeout(() => {
+              if (duration === 0) {
+                this.logDataService.putLogToStorageWithDefaultDuration(
+                  task,
+                  description
+                );
+              } else {
+                this.logDataService.putLogToStorageWithCustomDuration(
+                  task,
+                  description,
+                  duration
+                );
+              }
+              this.filledLogSubject.next();
+            }, 10);
+          };
+        });
       });
   }
 
