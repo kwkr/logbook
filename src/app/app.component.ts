@@ -4,7 +4,7 @@ import { InfoDialogComponent } from './info-dialog/info-dialog.component';
 import { StorageService } from './core/storage.service';
 import { WindowOpenerService } from './core/window-opener.service';
 
-const initialQUestionKey = 'initialQuestion';
+const firstLoadKey = 'firstLoad';
 
 @Component({
   selector: 'app-root',
@@ -19,12 +19,16 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const wasUnlocked = this.storage.getObjectFromStorage(initialQUestionKey);
-    if (wasUnlocked === null) {
-      setTimeout(() => {
-        this.windowService.openPermissionWindow();
-        this.openDialog();
-      }, 500);
+    const questionAsked = this.storage.getObjectFromStorage(firstLoadKey);
+    if (questionAsked === null) {
+      this.windowService
+        .openPermissionWindow()
+        .then(() => {})
+        .catch(() => {
+          setTimeout(() => {
+            this.openDialog();
+          }, 500);
+        });
     }
   }
 
@@ -34,7 +38,7 @@ export class AppComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      this.storage.saveObjectToStorage('done', initialQUestionKey);
+      this.storage.saveObjectToStorage('yes', firstLoadKey);
     });
   }
 }

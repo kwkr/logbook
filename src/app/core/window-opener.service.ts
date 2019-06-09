@@ -34,10 +34,17 @@ export class WindowOpenerService {
   }
 
   public openPermissionWindow() {
-    try {
-      const myWindow = window.open('', '', 'width=50,height=50');
-      myWindow.close();
-    } catch (e) {}
+    return new Promise((resolve, reject) => {
+      const myWindow = window.open('', '', 'width=0,height=0');
+      if (myWindow === null) {
+        reject();
+      } else {
+        resolve();
+        myWindow.blur();
+        window.focus();
+        myWindow.close();
+      }
+    });
   }
 
   public notifyOnFilled() {
