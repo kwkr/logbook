@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { SettingsService } from './settings.service';
 
 export interface Log {
   ts: number;
@@ -14,9 +15,8 @@ const lastTaskNameKey = 'lastTaskName';
 })
 export class LogDataService {
   private todayLogsSubject: BehaviorSubject<any>;
-  private currentDuration = 1800;
 
-  constructor() {
+  constructor(private settingsService: SettingsService) {
     this.todayLogsSubject = new BehaviorSubject(
       this.getCurrentItemsFromStorage()
     );
@@ -37,10 +37,10 @@ export class LogDataService {
     const newLog: Log = {
       description: description,
       ts: new Date().getTime(),
-      duration: this.currentDuration
+      duration: this.settingsService.getCurrentDuration()
     };
     todayItem[task].push(newLog);
-    localStorage.setItem(todayKey, JSON.stringify(todayItem));
+    this.putItemToStorage(todayKey, todayItem);
     this.updateLastTaskNameIfChanged(task);
     this.notifyOnNewLog();
   }
@@ -75,7 +75,7 @@ export class LogDataService {
   public getLastProjectName(): string {
     const lastProjectName: any = localStorage.getItem(lastTaskNameKey);
     if (!lastProjectName) {
-      localStorage.setItem(lastTaskNameKey, '');
+      this.putItemToStorage(lastTaskNameKey, '');
       return '';
     }
     return lastProjectName;
@@ -84,7 +84,7 @@ export class LogDataService {
   public updateLastTaskNameIfChanged(projectName: string): void {
     const currentName = localStorage.getItem(lastTaskNameKey);
     if (currentName !== projectName) {
-      localStorage.setItem(lastTaskNameKey, projectName);
+      this.putItemToStorage(lastTaskNameKey, projectName);
     }
   }
 
@@ -101,7 +101,7 @@ export class LogDataService {
     return lastProjectName;
   }
 
-  public getCurrentDuration() {
-    return this.currentDuration;
+  private saveObjectToStorage(object: any, key: string) {
+    localStorage.setItem(key, JSON.stringify(object));
   }
 }

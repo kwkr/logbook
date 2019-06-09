@@ -1,5 +1,13 @@
-<mat-card>
+<mat-card class="header-wrapper">
   <h1>LogBook</h1>
+  <div class="buttons-wrapper">
+    <button mat-raised-button routerLink="/">
+      ⏰
+    </button>
+    <button mat-raised-button routerLink="/settings">
+      🔧
+    </button>
+  </div>
 </mat-card>
 <router-outlet></router-outlet>
 <app-log-history></app-log-history>

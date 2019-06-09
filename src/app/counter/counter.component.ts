@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { WindowOpenerService } from '../core/window-opener.service';
 import { LogDataService } from '../core/log-data.service';
+import { SettingsService } from '../core/settings.service';
 
 @Component({
   selector: 'app-counter',
@@ -23,6 +24,7 @@ export class CounterComponent implements OnInit {
   constructor(
     private windowOpener: WindowOpenerService,
     private logService: LogDataService,
+    private settingsService: SettingsService,
     private cr: ChangeDetectorRef
   ) {
     this.generateRandomPauseText();
@@ -35,14 +37,14 @@ export class CounterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.timeLeft = this.logService.getCurrentDuration();
+    this.timeLeft = this.settingsService.getCurrentDuration();
     this.windowOpener.notifyOnFilled().subscribe(() => {
       this.startCounting();
     });
   }
 
   public startCounting(): void {
-    this.timeLeft = this.logService.getCurrentDuration();
+    this.timeLeft = this.settingsService.getCurrentDuration();
     this.isCounting = true;
     this.isPaused = false;
     this.currentIntervalId = setInterval(() => {

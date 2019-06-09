@@ -11,9 +11,10 @@ import { LogHistoryComponent } from './log-history/log-history.component';
 import { LogListComponent } from './log-history/log-list/log-list.component';
 import { TimePipe } from './core/time.pipe';
 import { SettingsComponent } from './settings/settings.component';
+import { ProjectsListComponent } from './settings/projects-list/projects-list.component';
 
 @NgModule({
-  declarations: [AppComponent, CounterComponent, LogHistoryComponent, LogListComponent, TimePipe, SettingsComponent],
+  declarations: [AppComponent, CounterComponent, LogHistoryComponent, LogListComponent, TimePipe, SettingsComponent, ProjectsListComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
