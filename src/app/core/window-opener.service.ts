@@ -30,6 +30,10 @@ export class WindowOpenerService {
           myWindow.focus();
           myWindow['transferData'] = (task, description) => {
             setTimeout(() => {
+              if (task === '') {
+                this.filledLogSubject.next();
+                return;
+              }
               if (duration === 0) {
                 this.logDataService.putLogToStorageWithDefaultDuration(
                   task,

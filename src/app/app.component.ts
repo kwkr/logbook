@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { InfoDialogComponent } from './info-dialog/info-dialog.component';
 import { StorageService } from './core/storage.service';
 import { WindowOpenerService } from './core/window-opener.service';
+import { DownloadService } from './core/download.service';
 
 const firstLoadKey = 'firstLoad';
 
@@ -15,7 +16,8 @@ export class AppComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private storage: StorageService,
-    private windowService: WindowOpenerService
+    private windowService: WindowOpenerService,
+    private downloadService: DownloadService
   ) {}
 
   ngOnInit() {
@@ -30,6 +32,12 @@ export class AppComponent implements OnInit {
           }, 500);
         });
     }
+  }
+
+  downloadData() {
+    const logs = this.storage.getAllLogs();
+    const blob = new Blob([JSON.stringify(logs)], { type: 'text/plain' });
+    this.downloadService.download(blob, 'export.json');
   }
 
   openDialog() {
