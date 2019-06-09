@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { SettingsService } from 'src/app/core/settings.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, AbstractControl } from '@angular/forms';
 import { MatSelectionList } from '@angular/material/list';
 
 @Component({
@@ -9,10 +9,18 @@ import { MatSelectionList } from '@angular/material/list';
   styleUrls: ['./projects-list.component.scss']
 })
 export class ProjectsListComponent implements OnInit {
+  constructor(private settingsService: SettingsService) {}
   projectOptions: string[] = [];
   @ViewChild('projectsList') projectsList: MatSelectionList;
-  newProjectFormControl: FormControl = new FormControl();
-  constructor(private settingsService: SettingsService) {}
+  newProjectFormControl: FormControl = new FormControl(
+    '',
+    (input: AbstractControl) => {
+      if (input.value === '') {
+        return { required: '' };
+      }
+      return null;
+    }
+  );
 
   ngOnInit() {
     this.settingsService.getProjectOptions().subscribe(options => {
@@ -22,8 +30,7 @@ export class ProjectsListComponent implements OnInit {
 
   @HostListener('window:keyup', ['$event'])
   public enterEvent(event: KeyboardEvent) {
-    console.log(event);
-    if (event.keyCode === 13) {
+    if (event.key === 'Enter') {
       this.addTask();
     }
   }
@@ -39,6 +46,7 @@ export class ProjectsListComponent implements OnInit {
   public addTask(): void {
     const newProject = this.newProjectFormControl.value;
     if (newProject === '') {
+      this.newProjectFormControl.markAsTouched();
       return;
     }
     this.newProjectFormControl.reset();
