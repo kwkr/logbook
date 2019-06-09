@@ -1,6 +1,5 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { WindowOpenerService } from '../core/window-opener.service';
-import { LogDataService } from '../core/log-data.service';
 import { SettingsService } from '../core/settings.service';
 
 @Component({
@@ -8,7 +7,7 @@ import { SettingsService } from '../core/settings.service';
   templateUrl: './counter.component.html',
   styleUrls: ['./counter.component.scss']
 })
-export class CounterComponent implements OnInit {
+export class CounterComponent implements OnInit, OnDestroy {
   timeLeft = 1;
   isCounting = false;
   isPaused = false;
@@ -23,7 +22,6 @@ export class CounterComponent implements OnInit {
 
   constructor(
     private windowOpener: WindowOpenerService,
-    private logService: LogDataService,
     private settingsService: SettingsService,
     private cr: ChangeDetectorRef
   ) {
@@ -44,9 +42,11 @@ export class CounterComponent implements OnInit {
   }
 
   public startCounting(): void {
+    this.clearExistingInterval();
     this.timeLeft = this.settingsService.getCurrentDuration();
     this.isCounting = true;
     this.isPaused = false;
+
     this.currentIntervalId = setInterval(() => {
       --this.timeLeft;
       if (this.timeLeft === 0) {
@@ -55,6 +55,13 @@ export class CounterComponent implements OnInit {
       }
       this.cr.detectChanges();
     }, 1000);
+  }
+
+  private clearExistingInterval() {
+    if (!this.currentIntervalId) {
+      clearInterval(this.currentIntervalId);
+      this.currentIntervalId = undefined;
+    }
   }
 
   public logInstantly() {
@@ -85,5 +92,9 @@ export class CounterComponent implements OnInit {
       }
       this.cr.detectChanges();
     }, 1000);
+  }
+
+  ngOnDestroy(): void {
+    this.clearExistingInterval();
   }
 }
