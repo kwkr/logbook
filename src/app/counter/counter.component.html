@@ -8,6 +8,7 @@
   <div *ngIf="isCounting" class="button-container">
     <p>{{ currentPauseText }}</p>
     <button mat-raised-button (click)="pauseCounting()">Pause</button>
+    <button mat-raised-button (click)="logInstantly()">Log now</button>
   </div>
   <div *ngIf="isPaused" class="button-container">
     <p>Paused...</p>

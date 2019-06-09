@@ -14,19 +14,30 @@ export class WindowOpenerService {
     private logDataService: LogDataService
   ) {}
 
-  public openNewWindowWithReminder(): void {
+  public openNewWindowWithReminder(duration: number): void {
     this.http
       .get<any>('assets/dialog-template/dialog.html', {
         responseType: 'text' as 'json'
       })
       .subscribe(data => {
         const myWindow = window.open('', '', 'width=400,height=200');
-        myWindow['lastTaskName'] = this.logDataService.getLastProjectName();
+        myWindow['lastTaskName'] = this.logDataService.getLastTaskName();
         myWindow.document.write(data);
         myWindow.focus();
         myWindow['transferData'] = (task, description) => {
           setTimeout(() => {
-            this.logDataService.putItemToStorage(task, description);
+            if (duration === 0) {
+              this.logDataService.putLogToStorageWithDefaultDuration(
+                task,
+                description
+              );
+            } else {
+              this.logDataService.putLogToStorageWithCustomDuration(
+                task,
+                description,
+                duration
+              );
+            }
             this.filledLogSubject.next();
           }, 10);
         };

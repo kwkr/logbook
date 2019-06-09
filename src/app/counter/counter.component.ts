@@ -50,11 +50,21 @@ export class CounterComponent implements OnInit {
     this.currentIntervalId = setInterval(() => {
       --this.timeLeft;
       if (this.timeLeft === 0) {
-        this.windowOpener.openNewWindowWithReminder();
+        this.windowOpener.openNewWindowWithReminder(0);
         clearInterval(this.currentIntervalId);
       }
       this.cr.detectChanges();
     }, 1000);
+  }
+
+  public logInstantly() {
+    this.isPaused = false;
+    this.isCounting = true;
+    clearInterval(this.currentIntervalId);
+    const wholeDuration = this.settingsService.getCurrentDuration();
+    const usedDuration = wholeDuration - this.timeLeft;
+    this.windowOpener.openNewWindowWithReminder(usedDuration);
+    this.cr.detectChanges();
   }
 
   public pauseCounting() {
@@ -70,7 +80,7 @@ export class CounterComponent implements OnInit {
     this.currentIntervalId = setInterval(() => {
       --this.timeLeft;
       if (this.timeLeft === 0) {
-        this.windowOpener.openNewWindowWithReminder();
+        this.windowOpener.openNewWindowWithReminder(0);
         clearInterval(this.currentIntervalId);
       }
       this.cr.detectChanges();

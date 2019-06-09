@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SettingsService } from './settings.service';
+import { StorageService } from './storage.service';
 
 export interface Log {
   ts: number;
@@ -16,43 +17,50 @@ const lastTaskNameKey = 'lastTaskName';
 export class LogDataService {
   private todayLogsSubject: BehaviorSubject<any>;
 
-  constructor(private settingsService: SettingsService) {
+  constructor(
+    private settingsService: SettingsService,
+    private storage: StorageService
+  ) {
     this.todayLogsSubject = new BehaviorSubject(
       this.getCurrentItemsFromStorage()
     );
   }
 
-  public putItemToStorage(task, description) {
+  public putLogToStorageWithDefaultDuration(task, description) {
+    this.putLogToStorageWithCustomDuration(
+      task,
+      description,
+      this.settingsService.getCurrentDuration()
+    );
+  }
+
+  public putLogToStorageWithCustomDuration(task, description, duration) {
     const todayKey = this.getTodaysTimestamp();
-    let todayItem: any = localStorage.getItem(todayKey);
+    let todayItem: any = this.storage.getObjectFromStorage(todayKey);
     if (!todayItem) {
       todayItem = {};
       todayItem[task] = [];
-    } else {
-      todayItem = JSON.parse(todayItem);
-      if (!todayItem[task]) {
-        todayItem[task] = [];
-      }
+    }
+    if (!todayItem[task]) {
+      todayItem[task] = [];
     }
     const newLog: Log = {
       description: description,
       ts: new Date().getTime(),
-      duration: this.settingsService.getCurrentDuration()
+      duration: duration
     };
     todayItem[task].push(newLog);
-    this.putItemToStorage(todayKey, todayItem);
+    this.saveObjectToStorage(todayItem, todayKey);
     this.updateLastTaskNameIfChanged(task);
     this.notifyOnNewLog();
   }
 
   private getCurrentItemsFromStorage() {
     const todayKey = this.getTodaysTimestamp();
-    let todayItem: any = localStorage.getItem(todayKey);
+    let todayItem: any = this.storage.getObjectFromStorage(todayKey);
     if (!todayItem) {
       todayItem = {};
       todayItem[todayKey] = [];
-    } else {
-      todayItem = JSON.parse(todayItem);
     }
     return todayItem;
   }
@@ -72,36 +80,40 @@ export class LogDataService {
     return String(todayDate.getTime());
   }
 
-  public getLastProjectName(): string {
-    const lastProjectName: any = localStorage.getItem(lastTaskNameKey);
-    if (!lastProjectName) {
-      this.putItemToStorage(lastTaskNameKey, '');
+  public getLastTaskName(): string {
+    const lastTaskName: any = this.storage.getObjectFromStorage(
+      lastTaskNameKey
+    );
+    if (!lastTaskName) {
+      this.saveObjectToStorage('', lastTaskNameKey);
       return '';
     }
-    return lastProjectName;
+    return lastTaskName;
   }
 
-  public updateLastTaskNameIfChanged(projectName: string): void {
-    const currentName = localStorage.getItem(lastTaskNameKey);
-    if (currentName !== projectName) {
-      this.putItemToStorage(lastTaskNameKey, projectName);
+  public updateLastTaskNameIfChanged(newTaskName: string): void {
+    const currentName = this.storage.getObjectFromStorage(lastTaskNameKey);
+    if (currentName !== newTaskName) {
+      this.saveObjectToStorage(newTaskName, lastTaskNameKey);
     }
   }
 
   public setLastProjectName(projectName: string): void {
-    localStorage.setItem(lastTaskNameKey, projectName);
+    this.storage.saveObjectToStorage(projectName, lastTaskNameKey);
   }
 
   public getLastTasktName(): string {
-    const lastProjectName: any = localStorage.getItem(lastTaskNameKey);
+    const lastProjectName: any = this.storage.getObjectFromStorage(
+      lastTaskNameKey
+    );
     if (!lastProjectName) {
-      localStorage.setItem(lastTaskNameKey, '');
+      this.storage.saveObjectToStorage('', lastTaskNameKey);
       return '';
     }
     return lastProjectName;
   }
 
   private saveObjectToStorage(object: any, key: string) {
-    localStorage.setItem(key, JSON.stringify(object));
+    this.storage.saveObjectToStorage(object, key);
   }
 }

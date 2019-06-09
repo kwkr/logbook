@@ -33,8 +33,6 @@ export class TimerSettingsComponent implements OnInit {
   saveNewTimer() {
     this.timerValueFormControl.markAsTouched();
     if (!this.timerValueFormControl.valid) {
-      console.log('not valid');
-
       this.timerValueFormControl.setValue(
         Math.floor(this.settings.getCurrentDuration() / 60)
       );
