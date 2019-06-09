@@ -3,6 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   imports: [
@@ -10,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatInputModule,
     MatListModule,
+    MatDialogModule,
     ReactiveFormsModule
   ],
   exports: [
@@ -17,6 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatInputModule,
     MatListModule,
+    MatDialogModule,
     ReactiveFormsModule
   ]
 })

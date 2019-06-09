@@ -33,6 +33,13 @@ export class WindowOpenerService {
       });
   }
 
+  public openPermissionWindow() {
+    try {
+      const myWindow = window.open('', '', 'width=50,height=50');
+      myWindow.close();
+    } catch (e) {}
+  }
+
   public notifyOnFilled() {
     return this.filledLogSubject.asObservable();
   }
